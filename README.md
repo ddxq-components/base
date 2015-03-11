@@ -1,8 +1,7 @@
 Base
 ==========
 
-Base 由 [arale-base](https://github.com/aralejs/base) 修改而来。
-Base 是一个基础类，提供 [Class](https://github.com/ddxq-components/class)、[Events](https://github.com/ddxq-components/events)、Attribute 和 Aspect 支持。
+Base 由 [arale-base](https://github.com/aralejs/base) 修改而来，提供 [Class](https://github.com/ddxq-components/class)、[Events](https://github.com/ddxq-components/events)、Attribute 和 Aspect 支持。
 
 ----------
 
