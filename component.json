@@ -1,0 +1,12 @@
+{
+  "name": "base",
+  "version": "1.0.0",
+  "description": "Base 是一个基础类，提供 Class、Events、Attribute 和 Aspect 支持。",
+  "keywords": ["infrastructure"],
+  "homepage": "http://aralejs.org/base",
+  "main":"index.js",
+  "dependencies": {
+    "ddxq-components/class": "1.0.0",
+    "ddxq-components/events": "1.0.0"
+  }
+}
