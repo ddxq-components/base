@@ -5,6 +5,11 @@
   "keywords": ["infrastructure"],
   "homepage": "http://aralejs.org/base",
   "main":"index.js",
+  "files:":[
+    "index.js",
+    "attribute.js",
+    "aspect.js"
+  ],
   "scripts:":[
     "index.js",
     "attribute.js",
