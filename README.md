@@ -6,10 +6,6 @@ Base 是一个基础类，提供 [Class](https://github.com/ddxq-components/clas
 
 ----------
 
-
-
----
-
 ## 使用说明
 
 ### extend `Base.extend(properties)`
