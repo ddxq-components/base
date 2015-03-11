@@ -5,6 +5,11 @@
   "keywords": ["infrastructure"],
   "homepage": "http://aralejs.org/base",
   "main":"index.js",
+  "scripts:":[
+    "index.js",
+    "attribute.js",
+    "aspect.js"
+  ],
   "dependencies": {
     "ddxq-components/class": "1.0.0",
     "ddxq-components/events": "1.0.0"
