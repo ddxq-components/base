@@ -4,8 +4,8 @@
 
 var Class = require('class');
 var Events = require('events');
-var Aspect = require('./aspect');
-var Attribute = require('./attribute');
+var Aspect = require('./aspect.js');
+var Attribute = require('./attribute.js');
 
 
 module.exports = Class.create({
