@@ -97,7 +97,11 @@ exports.set = function(key, val, options) {
         changed[key] = [val, prev];
       }
       else {
-        this.trigger('change:' + key, val, prev, key);
+        var returned = this.trigger('change:' + key, val, prev, key);
+        //增加总的change事件 20150314 by asoiso@foxmail.com
+        if(returned){
+          this.trigger('change', val, prev, key);
+        }
       }
     }
   }
@@ -115,7 +119,11 @@ exports.change = function() {
     for (var key in changed) {
       if (changed.hasOwnProperty(key)) {
         var args = changed[key];
-        this.trigger('change:' + key, args[0], args[1], key);
+        var returned = this.trigger('change:' + key, args[0], args[1], key);
+        //增加总的change事件 20150314 by asoiso@foxmail.com
+        if(returned){
+          this.trigger('change', args[0], args[1], key);
+        }
       }
     }
     delete this.__changedAttrs;
@@ -150,8 +158,8 @@ var iteratesOwnLast;
 }());
 
 var isArray = Array.isArray || function(val) {
-  return toString.call(val) === '[object Array]';
-};
+      return toString.call(val) === '[object Array]';
+    };
 
 function isString(val) {
   return toString.call(val) === '[object String]';

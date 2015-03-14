@@ -44,6 +44,10 @@ function parseEventsFromInstance(host, attrs) {
       }
     }
   }
+  //增加总的change事件 20150314 by asoiso@foxmail.com
+  if(host['_onChange']){
+    host.on('change', host['_onChange']);
+  }
 }
 
 function ucfirst(str) {

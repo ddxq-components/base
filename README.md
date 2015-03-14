@@ -126,10 +126,18 @@ var Panel = Base.extend({
         Panel.superclass.initialize.call(this, config);
         this.element = $(config.element).eq(0);
     },
-
     _onChangeColor: function(val) {
         this.element.css('backgroundColor', val);
+        //再执行_onChange
     }
+    _onChangeX: function(val, oldVal){
+		alert(val);
+		//return false后则不再执行_onChange
+		return false;
+	},
+	_onChange: function(val, oldVal, key){
+        alert(key+"的值为"+val);
+	}
 });
 
 exports.Panel = Panel;
@@ -153,7 +161,9 @@ console.log(panel.get('color')); // '#f00'
 console.log(panel.get('size')); // { width: 200, height: 100 }
 ```
 
-在初始化时，实例中的 `_onChangeX` 方法会自动注册到 `change:x` 事件的回调队列中：
+在初始化时，实例中的 `_onChangeX` 方法会自动注册到 `change:x` 事件的回调队列中。
+
+后又增加`_onChange` 实现，实例中的 `_onChange` 方法会自动注册到 `change` 事件的回调队列中。实例属性变化后，会先执行属性对应的事件，然后执行`change` 事件。如果不要事件冒泡，则在`_onChangeX`返回false。
 
 ```js
 /* test2.js */
