@@ -8,7 +8,7 @@
 
 // 负责 attributes 的初始化
 // attributes 是与实例相关的状态信息，可读可写，发生变化时，会自动触发相关事件
-exports.initAttrs = function(config) {
+exports.initAttrs = function (config) {
   // initAttrs 是在初始化时调用的，默认情况下实例上肯定没有 attrs，不存在覆盖问题
   var attrs = this.attrs = {};
 
@@ -33,7 +33,7 @@ exports.initAttrs = function(config) {
 
 
 // Get the value of an attribute.
-exports.get = function(key) {
+exports.get = function (key) {
   var attr = this.attrs[key] || {};
   var val = attr.value;
   return attr.getter ? attr.getter.call(this, val, key) : val;
@@ -42,7 +42,7 @@ exports.get = function(key) {
 
 // Set a hash of model attributes on the object, firing `"change"` unless
 // you choose to silence it.
-exports.set = function(key, val, options) {
+exports.set = function (key, val, options) {
   var attrs = {};
 
   // set("key", val, options)
@@ -99,7 +99,7 @@ exports.set = function(key, val, options) {
       else {
         var returned = this.trigger('change:' + key, val, prev, key);
         //增加总的change事件 20150314 by asoiso@foxmail.com
-        if(returned){
+        if (returned) {
           this.trigger('change', val, prev, key);
         }
       }
@@ -112,7 +112,7 @@ exports.set = function(key, val, options) {
 
 // Call this method to manually fire a `"change"` event for triggering
 // a `"change:attribute"` event for each changed attribute.
-exports.change = function() {
+exports.change = function () {
   var changed = this.__changedAttrs;
 
   if (changed) {
@@ -121,7 +121,7 @@ exports.change = function() {
         var args = changed[key];
         var returned = this.trigger('change:' + key, args[0], args[1], key);
         //增加总的change事件 20150314 by asoiso@foxmail.com
-        if(returned){
+        if (returned) {
           this.trigger('change', args[0], args[1], key);
         }
       }
@@ -149,15 +149,21 @@ var hasOwn = Object.prototype.hasOwnProperty;
  */
 /** Detect if own properties are iterated after inherited properties (IE < 9) */
 var iteratesOwnLast;
-(function() {
+(function () {
   var props = [];
-  function Ctor() { this.x = 1; }
-  Ctor.prototype = { 'valueOf': 1, 'y': 1 };
-  for (var prop in new Ctor()) { props.push(prop); }
+
+  function Ctor() {
+    this.x = 1;
+  }
+
+  Ctor.prototype = {'valueOf': 1, 'y': 1};
+  for (var prop in new Ctor()) {
+    props.push(prop);
+  }
   iteratesOwnLast = props[0] !== 'x';
 }());
 
-var isArray = Array.isArray || function(val) {
+var isArray = Array.isArray || function (val) {
       return toString.call(val) === '[object Array]';
     };
 
@@ -185,9 +191,7 @@ function isPlainObject(o) {
 
   try {
     // Not own constructor property must be Object
-    if (o.constructor &&
-        !hasOwn.call(o, "constructor") &&
-        !hasOwn.call(o.constructor.prototype, "isPrototypeOf")) {
+    if (o.constructor && !hasOwn.call(o, "constructor") && !hasOwn.call(o.constructor.prototype, "isPrototypeOf")) {
       return false;
     }
   } catch (e) {
@@ -208,7 +212,8 @@ function isPlainObject(o) {
 
   // Own properties are enumerated firstly, so to speed up,
   // if last one is own, then all properties are own.
-  for (key in o) {}
+  for (key in o) {
+  }
 
   return key === undefined || hasOwn.call(o, key);
 }
@@ -238,7 +243,7 @@ function merge(receiver, supplier) {
 }
 
 // 只 clone 数组和 plain object，其他的保持不变
-function cloneValue(value, prev){
+function cloneValue(value, prev) {
   if (isArray(value)) {
     value = value.slice();
   }
@@ -254,7 +259,7 @@ function cloneValue(value, prev){
 var keys = Object.keys;
 
 if (!keys) {
-  keys = function(o) {
+  keys = function (o) {
     var result = [];
 
     for (var name in o) {
@@ -335,7 +340,7 @@ function getEventName(name) {
 
 
 function setSetterAttrs(host, attrs, config) {
-  var options = { silent: true };
+  var options = {silent: true};
   host.__initializingAttrs = true;
 
   for (var key in config) {
@@ -384,7 +389,7 @@ function normalize(attrs, isUserValue) {
 
 var ATTR_OPTIONS = ['setter', 'getter', 'readOnly'];
 // 专用于 attrs 的 merge 方法
-function mergeAttrs(attrs, inheritedAttrs, isUserValue){
+function mergeAttrs(attrs, inheritedAttrs, isUserValue) {
   var key, value;
   var attr;
 
@@ -430,17 +435,21 @@ function hasOwnProperties(object, properties) {
 
 
 // 对于 attrs 的 value 来说，以下值都认为是空值： null, undefined, '', [], {}
-function isEmptyAttrValue(o) {
-  return o == null || // null, undefined
-      (isString(o) || isArray(o)) && o.length === 0 || // '', []
-      isEmptyObject(o); // {}
+//function isEmptyAttrValue(o) {
+//  return o == null || // null, undefined
+//      (isString(o) || isArray(o)) && o.length === 0 || // '', []
+//      isEmptyObject(o); // {}
+//}
+function isExists(o) {
+  return o == undefined || o == null;
 }
 
 // 判断属性值 a 和 b 是否相等，注意仅适用于属性值的判断，非普适的 === 或 == 判断。
+// 属性值变化判断,只要属性非null、非undefined，只要属性值变更，即使为empty对象也为变化 20150326 by asoiso@foxmail.com
 function isEqual(a, b) {
   if (a === b) return true;
 
-  if (isEmptyAttrValue(a) && isEmptyAttrValue(b)) return true;
+  if (!isExists(a) && !isExists(b)) return true;
 
   // Compare `[[Class]]` names.
   var className = toString.call(a);
