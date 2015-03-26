@@ -440,7 +440,7 @@ function hasOwnProperties(object, properties) {
 //      (isString(o) || isArray(o)) && o.length === 0 || // '', []
 //      isEmptyObject(o); // {}
 //}
-function isExists(o) {
+function isNotExists(o) {
   return o == undefined || o == null;
 }
 
@@ -449,7 +449,7 @@ function isExists(o) {
 function isEqual(a, b) {
   if (a === b) return true;
 
-  if (!isExists(a) && !isExists(b)) return true;
+  if (isNotExists(a) && isNotExists(b)) return true;
 
   // Compare `[[Class]]` names.
   var className = toString.call(a);
